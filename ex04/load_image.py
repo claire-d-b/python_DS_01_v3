@@ -34,31 +34,6 @@ def create_image(barray: list) -> Image:
     # Save the image as a JPEG file
     return image
 
-def ft_load(path: str) -> bytearray:
-    try:
-        Image.open(path)
-        image = Image.open(path)
-        barray = []
-
-        width, height = image.size
-
-        for x in range(0, height):
-            barray.insert(x, [])
-            for y in range(0, width):
-                r, g, b = image.getpixel((y, x))
-                barray[x].insert(y, [r, g, b])
-
-        string = "The shape of image is: "
-        items = image.getpixel((0, 0))
-        i = 0
-        for item in items:
-            i += 1
-        print(string, (height, width, i))
-
-    except AssertionError as e:
-        raise AssertionError("Error: failed to open file")
-    return barray
-
 def gray_convert(color_image: Image) -> tuple:
 # Convert the image to grayscale and create array from black&white image
     image = color_image.convert('L')
@@ -101,6 +76,30 @@ def rotate(three_d_lst: list) -> list:
     print(rotated_list)
     return rotated_list
 
+def ft_load(path: str) -> bytearray:
+    try:
+        Image.open(path)
+        image = Image.open(path)
+        barray = []
+
+        width, height = image.size
+
+        for x in range(0, height):
+            barray.insert(x, [])
+            for y in range(0, width):
+                r, g, b = image.getpixel((y, x))
+                barray[x].insert(y, [r, g, b])
+
+        string = "The shape of image is: "
+        items = image.getpixel((0, 0))
+        i = 0
+        for item in items:
+            i += 1
+        print(string, (height, width, i))
+
+    except:
+        raise AssertionError("Error: failed to open file")
+    return barray
 
 def ft_load(path: str) -> bytearray:
     try:
@@ -115,7 +114,13 @@ def ft_load(path: str) -> bytearray:
             for y in range(width):
                 r, g, b = image.getpixel((y, x))
                 barray[x].insert(y, [r, g, b])
-
+        
+        string = "The shape of image is: "
+        items = image.getpixel((0, 0))
+        i = 0
+        for item in items:
+            i += 1
+        print(string, (height, width, i))
 
         sliced_array = slice_me_3d(barray, height-650, height-250, width-600, width-200)
         nbarray = rotate(sliced_array)
@@ -123,33 +128,6 @@ def ft_load(path: str) -> bytearray:
         gray_array, nlst, image = gray_convert(color_image)
         print_fig(image, 'output.jpeg')
 
-        # """ Convert the flat list of RGB values to bytes """
-        # rgb_bytes = bytes(nbarray)
-
-        # """ Create an RGB image from bytes """
-        # img = Image.frombytes('RGB', (height, width), rgb_bytes)
-
-        # Convert the 3D list to a NumPy array
-        # array_data = np.array(nbarray, dtype=np.uint8)
-
-        # # Create an image from the array data
-        # image = Image.fromarray(array_data, 'RGB')
-
-        # # Save the image
-        # image.save(output_image_path)
-
-        # string = "The shape of image is: "
-        # items = image.getpixel((0, 0))
-        # i = 0
-        # for item in items:
-        #     i += 1
-        # print(string, (height, width, i))
-        # print(nbarray)
-    except:
+    except AssertionError as e:
         raise AssertionError("Error: failed to open file")
-
-    # string = "New shape after transpose: "
-
-    # print(string, (height, width))
-
     return nbarray

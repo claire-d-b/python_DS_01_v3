@@ -1,12 +1,13 @@
-from load_image import ft_invert, ft_red, ft_blue, ft_green, ft_gray
+from load_image import ft_invert, ft_red, ft_blue, ft_green, ft_grey, ft_load
 
 
 def main():
-    print(ft_invert("../landscape.jpg"))
-    print(ft_red("../andscape.jpg"))
-    print(ft_blue("../landscape.jpg"))
-    print(ft_green("../landscape.jpg"))
-    print(ft_gray("../landscape.jpg"))
+    array = ft_load("../landscape.jpg")
+    ft_invert(array)
+    ft_red(array)
+    ft_green(array)
+    ft_blue(array)
+    ft_grey(array)
     print(ft_invert.__doc__)
 
 

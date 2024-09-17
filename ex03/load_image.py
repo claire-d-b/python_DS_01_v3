@@ -62,6 +62,20 @@ def print_fig(image: Image, name: str) -> None:
     # Save the figure (optional)
     fig.savefig(name, format='JPEG')
 
+def rotate(three_d_lst: list) -> list:
+    # Rotate the 3D list 90° to the left
+    # When -1 is used as the step, it means to iterate in reverse order.
+    # stopping before -1. The -1 step indicates to count backwards.
+    # rotated_list = []
+    # for i in range(len(three_d_lst[0]) - 1, -1, -1):
+    #     for j in range(len(three_d_lst)):
+    #         rotated_list.append(three_d_lst[j][i])
+    rotated_list = [[three_d_lst[j][i] for j in range(len(three_d_lst))] for i in range(len(three_d_lst[0]) - 1, -1, -1)]
+
+    # Display the rotated 3D list
+    print(rotated_list)
+    return rotated_list
+
 def ft_load(path: str) -> bytearray:
     try:
         Image.open(path)
@@ -82,6 +96,10 @@ def ft_load(path: str) -> bytearray:
         for item in items:
             i += 1
         print(string, (height, width, i))
+        sliced_array = slice_me_3d(barray, height-650, height-250, width-600, width-200)
+        color_image = create_image(sliced_array)
+        gray_array, nlst, image = gray_convert(color_image)
+        print_fig(image, 'output.jpeg')
 
     except AssertionError as e:
         raise AssertionError("Error: failed to open file")

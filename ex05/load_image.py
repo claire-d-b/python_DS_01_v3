@@ -1,15 +1,46 @@
 from PIL import Image, ImageOps
+import numpy as np
+import array
+
+def create_image(barray: list) -> Image:
+    # Get the dimensions of the image
+    height = len(barray)
+    width = len(barray[0])
+
+    # Create a new Pillow image with RGB mode
+    image = Image.new('RGB', (width, height))
+
+    # Populate the image with pixel values
+    pixels = image.load()
+    for y, row in enumerate(barray):
+        for x, color in enumerate(row):
+            pixels[x, y] = tuple(color)
+
+    # Save the image as a JPEG file
+    return image
+
+def gray_convert(color_image: Image) -> tuple:
+# Convert the image to grayscale and create array from black&white image
+    image = color_image.convert('L')
+
+    gray_array = np.array(image)
+
+    lst = gray_array.tolist()
+    nlst = []
+    for x, item in enumerate(lst):
+        nlst.insert(x, [])
+        for y, unit in enumerate(item):
+            nlst[x].insert(y, [unit])
+
+    return tuple((gray_array, nlst, image))
 
 
-def ft_invert(path: str) -> bytearray:
+def ft_invert(array) -> array:
     """Inverts the color of the image received."""
-    input_image_path = path
-    output_image_path = "pimp_image_inv.jpeg"
+    output_image_path = "Invert.jpeg"
     barray = []
     try:
-        assert Image.open(input_image_path)
-        """ Open the image """
-        image = Image.open(input_image_path)
+        image = create_image(array)
 
         """ Invert the image """
         inverted_image = ImageOps.invert(image)
@@ -17,154 +48,99 @@ def ft_invert(path: str) -> bytearray:
         """ Save the inverted image """
         inverted_image.save(output_image_path)
 
-        width, height = image.size
+        width, height = inverted_image.size
 
-        string = "The shape of image is: "
-        items = image.getpixel((0, 0))
-        i = 0
-        for item in items:
-            i += 1
-        print(string, (height, width, i))
-
-        for x in range(width):
-            for y in range(height):
-                r, g, b = image.getpixel((x, y))
-                barray.append([r, g, b])
-        barray.append([r, g, b])
-
-    except AssertionError as e:
-        print(f"AssertionError: {e}")
+        for x in range(0, height):
+            barray.insert(x, [])
+            for y in range(0, width):
+                r, g, b = inverted_image.getpixel((y, x))
+                barray[x].insert(y, [r, g, b])
+    except:
+        raise AssertionError("Error: failed to create image")
 
     return barray
 
 
-def ft_red(path: str) -> bytearray:
-    input_image_path = path
-    output_image_path = "pimp_image_red.jpeg"
+def ft_red(array) -> array:
+    output_image_path = "Red.jpeg"
     barray = []
     try:
-        assert Image.open(input_image_path)
-        image = Image.open(input_image_path)
+        nimage = create_image(array)
 
-        width, height = image.size
+        width, height = nimage.size
 
-        string = "The shape of image is: "
-        items = image.getpixel((0, 0))
-        i = 0
-        for item in items:
-            i += 1
-        print(string, (height, width, i))
+        for x in range(0, height):
+            barray.insert(x, [])
+            for y in range(0, width):
+                r, g, b = nimage.getpixel((y, x))
+                barray[x].insert(y, [r, 0, 0])
+        
+        red_image = create_image(barray)
+        red_image.save(output_image_path)
 
-        for x in range(height):
-            for y in range(width):
-                r, g, b = image.getpixel((y, x))
-                barray.extend([r, 0, 0])
-        barray.extend([r, 0, 0])
-
-        """ Convert the flat list of RGB values to bytes """
-        rgb_bytes = bytes(barray)
-
-        """ Create an RGB image from bytes """
-        img = Image.frombytes('RGB', (width, height), rgb_bytes)
-
-        img.save(output_image_path)
-
-    except AssertionError as e:
-        print(f"AssertionError: {e}")
+    except:
+        raise AssertionError("Error: failed to create image")
 
     return barray
 
 
-def ft_blue(path: str) -> bytearray:
-    input_image_path = path
-    output_image_path = "pimp_image_blue.jpeg"
+def ft_blue(array) -> array:
+    output_image_path = "Blue.jpeg"
     barray = []
     try:
-        assert Image.open(input_image_path)
-        image = Image.open(input_image_path)
+        nimage = create_image(array)
+        nimage.save(output_image_path)
 
-        width, height = image.size
+        width, height = nimage.size
 
-        string = "The shape of image is: "
-        items = image.getpixel((0, 0))
-        i = 0
-        for item in items:
-            i += 1
-        print(string, (height, width, i))
+        for x in range(0, height):
+            barray.insert(x, [])
+            for y in range(0, width):
+                r, g, b = nimage.getpixel((y, x))
+                barray[x].insert(y, [0, 0, b])
+        
+        blue_image = create_image(barray)
+        blue_image.save(output_image_path)
 
-        for x in range(height):
-            for y in range(width):
-                r, g, b = image.getpixel((y, x))
-                barray.extend([0, 0, b])
-        barray.extend([0, 0, b])
-
-        """ Convert the flat list of RGB values to bytes """
-        rgb_bytes = bytes(barray)
-
-        """ Create an RGB image from bytes """
-        img = Image.frombytes('RGB', (width, height), rgb_bytes)
-
-        img.save(output_image_path)
-
-    except AssertionError as e:
-        print(f"AssertionError: {e}")
+    except:
+        raise AssertionError("Error: failed to create image")
 
     return barray
 
 
-def ft_green(path: str) -> bytearray:
-    input_image_path = path
-    output_image_path = "pimp_image_green.jpeg"
+def ft_green(array) -> array:
+    output_image_path = "Green.jpeg"
     barray = []
     try:
-        assert Image.open(input_image_path)
-        image = Image.open(input_image_path)
+        nimage = create_image(array)
+        nimage.save(output_image_path)
 
-        width, height = image.size
+        width, height = nimage.size
 
-        string = "The shape of image is: "
-        items = image.getpixel((0, 0))
-        i = 0
-        for item in items:
-            i += 1
-        print(string, (height, width, i))
+        for x in range(0, height):
+            barray.insert(x, [])
+            for y in range(0, width):
+                r, g, b = nimage.getpixel((y, x))
+                barray[x].insert(y, [0, g, 0])
+            
+        green_image = create_image(barray)
+        green_image.save(output_image_path)
 
-        for x in range(height):
-            for y in range(width):
-                r, g, b = image.getpixel((y, x))
-                barray.extend([0, g, 0])
-        barray.extend([0, g, 0])
-
-        """ Convert the flat list of RGB values to bytes """
-        rgb_bytes = bytes(barray)
-
-        """ Create an RGB image from bytes """
-        img = Image.frombytes('RGB', (width, height), rgb_bytes)
-
-        img.save(output_image_path)
-
-    except AssertionError as e:
-        print(f"AssertionError: {e}")
+    except:
+        raise AssertionError("Error: failed to create image")
 
     return barray
 
 
-def ft_gray(path: str) -> bytearray:
-    input_image_path = path
-    output_image_path = "pimp_image_gray.jpeg"
+def ft_grey(array) -> array:
+    output_image_path = "Grey.jpeg"
     barray = []
     try:
-        assert Image.open(input_image_path)
-        image = Image.open(input_image_path)
+        nimage = create_image(array)
+        gray_array, nlst, gray_image = gray_convert(nimage)
+        gray_image.save(output_image_path)
 
-        width, height = image.size
-
-        string = "The shape of image is: "
-        items = image.getpixel((0, 0))
-        i = 0
-        for item in items:
-            i += 1
-        print(string, (height, width, i))
+        width, height = nimage.size
 
         """ Grayscale colors are those where the red, green, and blue
         components are all equal.
@@ -172,21 +148,37 @@ def ft_gray(path: str) -> bytearray:
         for black to (255, 255, 255) for white, with intermediate values
         representing different shades of gray. """
 
-        for x in range(height):
-            for y in range(width):
+        for x in range(0, height):
+            barray.insert(x, [])
+            for y in range(0, width):
+                r, g, b = nimage.getpixel((y, x))
+                barray[x].insert(y, [r, g, b])
+
+    except:
+        raise AssertionError("Error: failed to create image")
+
+    return barray
+
+def ft_load(path: str) -> array:
+    try:
+        Image.open(path)
+        image = Image.open(path)
+        barray = []
+
+        width, height = image.size
+
+        for x in range(0, height):
+            barray.insert(x, [])
+            for y in range(0, width):
                 r, g, b = image.getpixel((y, x))
-                barray.extend([r, r, r])
-        barray.extend([r, r, r])
+                barray[x].insert(y, [r, g, b])
 
-        """ Convert the flat list of RGB values to bytes """
-        rgb_bytes = bytes(barray)
-
-        """ Create an RGB image from bytes """
-        img = Image.frombytes('RGB', (width, height), rgb_bytes)
-
-        img.save(output_image_path)
-
-    except AssertionError as e:
-        print(f"AssertionError: {e}")
-
+        string = "The shape of image is: "
+        items = image.getpixel((0, 0))
+        i = 0
+        for item in items:
+            i += 1
+        print(string, (height, width, i))
+    except:
+        raise AssertionError("Error: failed to open file")
     return barray
