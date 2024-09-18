@@ -1,18 +1,19 @@
 def slice_me(family: list, start: int, end: int) -> list:
+    """Slice a two dimensional array"""
     ret = []
-    if isinstance(family, list):
-        lencol = len(family[0])
+    try:
+        assert isinstance(family, list) and isinstance(start, int) and isinstance(end, int), "Error: wrong type for parameters"
+        rows = len(family[0])
         ret = family[start:end]
         for f in family:
-            if lencol != len(f):
-                raise AssertionError("Error: inner lists are not the same size")
-                return None
+            assert rows == len(f), "Error: inner lists are not the same size"
+
         shape = (len(family), len(family[0]))
         nshape = (len(ret), len(ret[0]))
         print("My shape is: ", shape)
         print("My new shape is: ", nshape)
 
-    else:
-        raise AssertionError("Error: parameter is not a list")
-        return None
+    except AssertionError as e:
+        print(f"AssertionError: {e}")
+
     return ret
