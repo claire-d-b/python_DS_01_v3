@@ -2,6 +2,7 @@ from PIL import Image
 import array
 
 def load_image(image) -> array:
+    """Create array from  pillow image"""
     try:
         barray = []
         width, height = image.size
@@ -18,8 +19,9 @@ def load_image(image) -> array:
         for item in items:
             i += 1
         print(string, (height, width, i))
+        print(barray)
     except:
-        raise AssertionError("An error occured when loading image")
+        raise AssertionError("An error occured")
     return barray
 
 def ft_load(path: str) -> array:

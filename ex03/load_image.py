@@ -9,6 +9,7 @@ import array
 # To create a grayscale image from a 3D list using Pillow, you need to ensure that the 3D list represents an image where the third dimension contains only one value (the grayscale intensity). The 3D list should be structured as [height][width][1], where each sub-list represents a row of pixels, and each pixel has a single grayscale intensity value.
 
 def slice_me_3d(family: list, start_x: int, end_x: int, start_y: int, end_y: int) -> list:
+    """Slice a three dimensional list"""
     ret = []
     if isinstance(family, list):
         ret = family[start_x:end_x]
@@ -19,6 +20,7 @@ def slice_me_3d(family: list, start_x: int, end_x: int, start_y: int, end_y: int
     return ret
 
 def create_image(barray: list) -> Image:
+    """Create image from list"""
     # Get the dimensions of the image
     height = len(barray)
     width = len(barray[0])
@@ -36,7 +38,7 @@ def create_image(barray: list) -> Image:
     return image
 
 def gray_convert(color_image: Image) -> tuple:
-# Convert the image to grayscale and create array from black&white image
+    """Convert the image to grayscale and create array from black&white image"""
     image = color_image.convert('L')
 
     gray_array = np.array(image)
@@ -51,7 +53,8 @@ def gray_convert(color_image: Image) -> tuple:
     return tuple((gray_array, nlst, image))
 
 def print_fig(image: Image, name: str) -> None:
-# Convert the Pillow image to a NumPy array
+    """Save figure"""
+    # Convert the Pillow image to a NumPy array
     data_np = np.array(image)
 
     # Step 3: Display the Image in a Matplotlib Figure
@@ -63,26 +66,10 @@ def print_fig(image: Image, name: str) -> None:
     # Save the figure (optional)
     fig.savefig(name, format='JPEG')
 
-def rotate(three_d_lst: list) -> list:
-    # Rotate the 3D list 90° to the left
-    # When -1 is used as the step, it means to iterate in reverse order.
-    # stopping before -1. The -1 step indicates to count backwards.
-    # rotated_list = []
-    # for i in range(len(three_d_lst[0]) - 1, -1, -1):
-    #     for j in range(len(three_d_lst)):
-    #         rotated_list.append(three_d_lst[j][i])
-    rotated_list = [[three_d_lst[j][i] for j in range(len(three_d_lst))] for i in range(len(three_d_lst[0]) - 1, -1, -1)]
-
-    # Display the rotated 3D list
-    print(rotated_list)
-    return rotated_list
-
-def ft_load(path: str) -> array:
+def load_image(image) -> array:
+    """Create array from  pillow image"""
     try:
-        Image.open(path)
-        image = Image.open(path)
         barray = []
-
         width, height = image.size
 
         for x in range(0, height):
@@ -97,12 +84,22 @@ def ft_load(path: str) -> array:
         for item in items:
             i += 1
         print(string, (height, width, i))
-    
+        print(barray)
+
         sliced_array = slice_me_3d(barray, height-650, height-250, width-600, width-200)
         color_image = create_image(sliced_array)
         gray_array, nlst, image = gray_convert(color_image)
+        print(f"New shape after slicing: {tuple((gray_array.shape[0], gray_array.shape[1], 3 - gray_array.ndim))} or {gray_array.shape}")
+        print(nlst)
         print_fig(image, 'output.jpeg')
-
-    except AssertionError as e:
-        raise AssertionError("Error: failed to open file")
+    except:
+        raise AssertionError("An error occured")
     return barray
+
+def ft_load(path: str) -> array:
+    try:
+        Image.open(path)
+        image = Image.open(path)
+    except:
+        raise AssertionError("Error: failed to open file")
+    return load_image(image)

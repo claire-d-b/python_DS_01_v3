@@ -162,10 +162,8 @@ def ft_grey(array) -> array:
 
     return barray
 
-def ft_load(path: str) -> array:
+def load_image(image) -> array:
     try:
-        Image.open(path)
-        image = Image.open(path)
         barray = []
 
         width, height = image.size
@@ -182,6 +180,15 @@ def ft_load(path: str) -> array:
         for item in items:
             i += 1
         print(string, (height, width, i))
+        print(barray)
+    except:
+        raise AssertionError("An error occured")
+    return barray
+
+def ft_load(path: str) -> array:
+    try:
+        Image.open(path)
+        image = Image.open(path)
     except:
         raise AssertionError("Error: failed to open file")
-    return barray
+    return load_image(image)

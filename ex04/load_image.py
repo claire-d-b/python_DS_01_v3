@@ -77,13 +77,12 @@ def rotate(three_d_lst: list) -> list:
             rotated_list[len(three_d_lst[0]) -1 - i].insert(j, three_d_lst[j][i])
 
     # <=> list comprehension: rotated_list = [[three_d_lst[j][i] for j in range(len(three_d_lst))] for i in range(len(three_d_lst[0]) - 1, -1, -1)]
-
+    print(f"New shape after Transpose: {gray_array.shape}")
+    print(rotated_list)
     return rotated_list
 
-def ft_load(path: str) -> array:
+def load_image(image) -> array:
     try:
-        Image.open(path)
-        image = Image.open(path)
         barray = []
 
         width, height = image.size
@@ -93,20 +92,24 @@ def ft_load(path: str) -> array:
             for y in range(width):
                 r, g, b = image.getpixel((y, x))
                 barray[x].insert(y, [r, g, b])
-        
-        string = "The shape of image is: "
-        items = image.getpixel((0, 0))
-        i = 0
-        for item in items:
-            i += 1
-        print(string, (height, width, i))
 
         sliced_array = slice_me_3d(barray, height-650, height-250, width-600, width-200)
         nbarray = rotate(sliced_array)
         color_image = create_image(nbarray)
         gray_array, nlst, image = gray_convert(color_image)
+
+        print(f"The shape of image is: {tuple((gray_array.shape[0], gray_array.shape[1], 3 - gray_array.ndim))} or {gray_array.shape}")
+        print(nlst)
         print_fig(image, 'output.jpeg')
 
-    except AssertionError as e:
-        raise AssertionError("Error: failed to open file")
+    except:
+        raise AssertionError("An error occured")
     return nbarray
+
+def ft_load(path: str) -> array:
+    try:
+        Image.open(path)
+        image = Image.open(path)
+    except:
+        raise AssertionError("Error: failed to open file")
+    return load_image(image)
