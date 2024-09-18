@@ -18,6 +18,7 @@ def slice_me_3d(family: list, start_x: int, end_x: int, start_y: int, end_y: int
     return ret
 
 def create_image(barray: list) -> Image:
+    """Create image from array"""
     # Get the dimensions of the image
     height = len(barray)
     width = len(barray[0])
@@ -35,7 +36,7 @@ def create_image(barray: list) -> Image:
     return image
 
 def gray_convert(color_image: Image) -> tuple:
-# Convert the image to grayscale and create array from black&white image
+    """Convert the image to grayscale and create array from black&white image"""
     image = color_image.convert('L')
 
     gray_array = np.array(image)
@@ -50,7 +51,8 @@ def gray_convert(color_image: Image) -> tuple:
     return tuple((gray_array, nlst, image))
 
 def print_fig(image: Image, name: str) -> None:
-# Convert the Pillow image to a NumPy array
+    """Save data as a figure"""
+    # Convert the Pillow image to a NumPy array
     data_np = np.array(image)
 
     # Step 3: Display the Image in a Matplotlib Figure
@@ -60,7 +62,7 @@ def print_fig(image: Image, name: str) -> None:
     img_ax = ax.imshow(data_np, cmap='gray')
 
     # Save the figure (optional)
-    fig.savefig('output.jpeg', format='JPEG')
+    fig.savefig(name, format='JPEG')
 
 def rotate(three_d_lst: list) -> list:
     # Rotate the 3D list 90° to the left
@@ -70,10 +72,15 @@ def rotate(three_d_lst: list) -> list:
     # for i in range(len(three_d_lst[0]) - 1, -1, -1):
     #     for j in range(len(three_d_lst)):
     #         rotated_list.append(three_d_lst[j][i])
-    rotated_list = [[three_d_lst[j][i] for j in range(len(three_d_lst))] for i in range(len(three_d_lst[0]) - 1, -1, -1)]
+    rotated_list = []
+    for i in range(len(three_d_lst[0]) - 1, -1, -1):
+        rotated_list.insert(len(three_d_lst[0]) - 1 - i, [])
+        for j in range(0, len(three_d_lst)):
+            rotated_list[len(three_d_lst[0]) -1 - i].insert(j, three_d_lst[j][i])
+
+    # rotated_list = [[three_d_lst[j][i] for j in range(len(three_d_lst))] for i in range(len(three_d_lst[0]) - 1, -1, -1)]
 
     # Display the rotated 3D list
-    print(rotated_list)
     return rotated_list
 
 def ft_load(path: str) -> bytearray:

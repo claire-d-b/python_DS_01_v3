@@ -3,6 +3,7 @@ import numpy as np
 import array
 
 def create_image(barray: list) -> Image:
+    """Create image from array"""
     # Get the dimensions of the image
     height = len(barray)
     width = len(barray[0])
@@ -20,7 +21,7 @@ def create_image(barray: list) -> Image:
     return image
 
 def gray_convert(color_image: Image) -> tuple:
-# Convert the image to grayscale and create array from black&white image
+    """Convert the image to grayscale and create array from black&white image"""
     image = color_image.convert('L')
 
     gray_array = np.array(image)
@@ -42,10 +43,10 @@ def ft_invert(array) -> array:
     try:
         image = create_image(array)
 
-        """ Invert the image """
+        # Invert the image
         inverted_image = ImageOps.invert(image)
 
-        """ Save the inverted image """
+        # Save the inverted image
         inverted_image.save(output_image_path)
 
         width, height = inverted_image.size
@@ -62,6 +63,7 @@ def ft_invert(array) -> array:
 
 
 def ft_red(array) -> array:
+    """Displays bluescale image by setting b and g to 0"""
     output_image_path = "Red.jpeg"
     barray = []
     try:
@@ -85,6 +87,7 @@ def ft_red(array) -> array:
 
 
 def ft_blue(array) -> array:
+    """Displays bluescale image by setting r and g to 0"""
     output_image_path = "Blue.jpeg"
     barray = []
     try:
@@ -109,6 +112,7 @@ def ft_blue(array) -> array:
 
 
 def ft_green(array) -> array:
+    """Displays bluescale image by setting r and b to 0"""
     output_image_path = "Green.jpeg"
     barray = []
     try:
@@ -133,6 +137,11 @@ def ft_green(array) -> array:
 
 
 def ft_grey(array) -> array:
+    """ Grayscale colors are those where the red, green, and blue
+        components are all equal.
+        The RGB values that make up shades of gray range from (0, 0, 0)
+        for black to (255, 255, 255) for white, with intermediate values
+        representing different shades of gray. """
     output_image_path = "Grey.jpeg"
     barray = []
     try:
@@ -141,12 +150,6 @@ def ft_grey(array) -> array:
         gray_image.save(output_image_path)
 
         width, height = nimage.size
-
-        """ Grayscale colors are those where the red, green, and blue
-        components are all equal.
-        The RGB values that make up shades of gray range from (0, 0, 0)
-        for black to (255, 255, 255) for white, with intermediate values
-        representing different shades of gray. """
 
         for x in range(0, height):
             barray.insert(x, [])
