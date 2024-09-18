@@ -5,10 +5,19 @@ import array
 
 # Grayscale ('L' Mode):
 # Channels: 1 (Intensity)
-# Description: Each pixel value represents the intensity of the grayscale color, ranging from black (0) to white (255). There is no alpha channel in this mode.
-# To create a grayscale image from a 3D list using Pillow, you need to ensure that the 3D list represents an image where the third dimension contains only one value (the grayscale intensity). The 3D list should be structured as [height][width][1], where each sub-list represents a row of pixels, and each pixel has a single grayscale intensity value.
+# Description: Each pixel value represents the intensity of the
+# grayscale color, ranging from black (0) to white (255).
+# There is no alpha channel in this mode.
+# To create a grayscale image from a 3D list using Pillow,
+# you need to ensure that the 3D list represents an image where
+# the third dimension contains only one value (the grayscale intensity).
+# The 3D list should be structured as [height][width][1],
+# where each sub-list represents a row of pixels, and each pixel
+# has a single grayscale intensity value.
 
-def slice_me_3d(family: list, start_x: int, end_x: int, start_y: int, end_y: int) -> list:
+
+def slice_me_3d(family: list, start_x: int, end_x: int, start_y: int,
+                end_y: int) -> list:
     ret = []
     if isinstance(family, list):
         ret = family[start_x:end_x]
@@ -17,6 +26,7 @@ def slice_me_3d(family: list, start_x: int, end_x: int, start_y: int, end_y: int
     else:
         raise AssertionError("Error: parameter is not a list")
     return ret
+
 
 def create_image(barray: list) -> Image:
     """Create image from array"""
@@ -36,8 +46,10 @@ def create_image(barray: list) -> Image:
     # Save the image as a JPEG file
     return image
 
+
 def gray_convert(color_image: Image) -> tuple:
-    """Convert the image to grayscale and create array from black&white image"""
+    """Convert the image to grayscale and create array
+    from black&white image"""
     image = color_image.convert('L')
 
     gray_array = np.array(image)
@@ -51,6 +63,7 @@ def gray_convert(color_image: Image) -> tuple:
 
     return tuple((gray_array, nlst, image))
 
+
 def print_fig(image: Image, name: str) -> None:
     """Save data as a figure"""
     # Convert the Pillow image to a NumPy array
@@ -60,10 +73,11 @@ def print_fig(image: Image, name: str) -> None:
     fig, ax = plt.subplots()
 
     # Display the data as an image
-    img_ax = ax.imshow(data_np, cmap='gray')
+    ax.imshow(data_np, cmap='gray')
 
     # Save the figure (optional)
     fig.savefig(name, format='JPEG')
+
 
 def rotate(three_d_lst: list) -> list:
     # Rotate the 3D list 90° to the left
@@ -74,12 +88,15 @@ def rotate(three_d_lst: list) -> list:
     for i in range(len(three_d_lst[0]) - 1, -1, -1):
         rotated_list.insert(len(three_d_lst[0]) - 1 - i, [])
         for j in range(0, len(three_d_lst)):
-            rotated_list[len(three_d_lst[0]) -1 - i].insert(j, three_d_lst[j][i])
+            rotated_list[len(three_d_lst[0]) - 1 - i].insert(j,
+                                                             three_d_lst[j][i])
 
-    # <=> list comprehension: rotated_list = [[three_d_lst[j][i] for j in range(len(three_d_lst))] for i in range(len(three_d_lst[0]) - 1, -1, -1)]
-    print(f"New shape after Transpose: {gray_array.shape}")
-    print(rotated_list)
+    # <=> list comprehension: rotated_list = [[three_d_lst[j][i] for j
+    # in range(len(three_d_lst))]
+    # for i in range(len(three_d_lst[0]) - 1, -1, -1)]
+
     return rotated_list
+
 
 def load_image(image) -> array:
     try:
@@ -87,29 +104,43 @@ def load_image(image) -> array:
 
         width, height = image.size
 
-        for x in range(height):
+        for x in range(0, height):
             barray.insert(x, [])
-            for y in range(width):
+            for y in range(0, width):
                 r, g, b = image.getpixel((y, x))
                 barray[x].insert(y, [r, g, b])
 
-        sliced_array = slice_me_3d(barray, height-650, height-250, width-600, width-200)
-        nbarray = rotate(sliced_array)
-        color_image = create_image(nbarray)
+        sliced_array = slice_me_3d(barray, height-650, height-250,
+                                   width-600, width-200)
+
+        color_image = create_image(sliced_array)
         gray_array, nlst, image = gray_convert(color_image)
 
-        print(f"The shape of image is: {tuple((gray_array.shape[0], gray_array.shape[1], 3 - gray_array.ndim))} or {gray_array.shape}")
+        print(f"The shape of image is: {tuple((gray_array.shape[0],
+                                               gray_array.shape[1],
+                                               3 - gray_array.ndim))} \
+or {gray_array.shape}")
         print(nlst)
-        print_fig(image, 'output.jpeg')
+        rotated_array = rotate(nlst)
 
-    except:
-        raise AssertionError("An error occured")
-    return nbarray
+        nrotated_array = np.array(rotated_array)
+        print(f"New shape after Transpose: {(nrotated_array.shape[0],
+                                             nrotated_array.shape[1])}")
+        print(rotated_array)
+
+        color_image = create_image(rotated_array)
+        gray_array, nlst, image = gray_convert(color_image)
+        print_fig(image, 'output.jpeg')
+        return nrotated_array
+
+    except Exception as e:
+        raise AssertionError(f"An error occured: {e}")
+
 
 def ft_load(path: str) -> array:
     try:
         Image.open(path)
         image = Image.open(path)
-    except:
+    except Exception:
         raise AssertionError("Error: failed to open file")
     return load_image(image)

@@ -2,7 +2,8 @@ def slice_me(family: list, start: int, end: int) -> list:
     """Slice a two dimensional array"""
     ret = []
     try:
-        assert isinstance(family, list) and isinstance(start, int) and isinstance(end, int), "Error: wrong type for parameters"
+        assert isinstance(family, list) and isinstance(start, int) and \
+            isinstance(end, int), "Error: wrong type for parameters"
         rows = len(family[0])
         ret = family[start:end]
         for f in family:

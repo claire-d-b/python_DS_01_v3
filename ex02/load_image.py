@@ -1,6 +1,7 @@
 from PIL import Image
 import array
 
+
 def load_image(image) -> array:
     """Create array from  pillow image"""
     try:
@@ -20,14 +21,15 @@ def load_image(image) -> array:
             i += 1
         print(string, (height, width, i))
         print(barray)
-    except:
+    except Exception:
         raise AssertionError("An error occured")
     return barray
+
 
 def ft_load(path: str) -> array:
     try:
         Image.open(path)
         image = Image.open(path)
-    except:
+    except Exception:
         raise AssertionError("Error: failed to open file")
     return load_image(image)

@@ -2,6 +2,7 @@ from PIL import Image, ImageOps
 import numpy as np
 import array
 
+
 def create_image(barray: list) -> Image:
     """Create image from array"""
     # Get the dimensions of the image
@@ -20,8 +21,10 @@ def create_image(barray: list) -> Image:
     # Save the image as a JPEG file
     return image
 
+
 def gray_convert(color_image: Image) -> tuple:
-    """Convert the image to grayscale and create array from black&white image"""
+    """Convert the image to grayscale and create array from \
+black&white image"""
     image = color_image.convert('L')
 
     gray_array = np.array(image)
@@ -56,7 +59,7 @@ def ft_invert(array) -> array:
             for y in range(0, width):
                 r, g, b = inverted_image.getpixel((y, x))
                 barray[x].insert(y, [r, g, b])
-    except:
+    except Exception:
         raise AssertionError("Error: failed to create image")
 
     return barray
@@ -76,11 +79,11 @@ def ft_red(array) -> array:
             for y in range(0, width):
                 r, g, b = nimage.getpixel((y, x))
                 barray[x].insert(y, [r, 0, 0])
-        
+
         red_image = create_image(barray)
         red_image.save(output_image_path)
 
-    except:
+    except Exception:
         raise AssertionError("Error: failed to create image")
 
     return barray
@@ -101,11 +104,11 @@ def ft_blue(array) -> array:
             for y in range(0, width):
                 r, g, b = nimage.getpixel((y, x))
                 barray[x].insert(y, [0, 0, b])
-        
+
         blue_image = create_image(barray)
         blue_image.save(output_image_path)
 
-    except:
+    except Exception:
         raise AssertionError("Error: failed to create image")
 
     return barray
@@ -126,11 +129,11 @@ def ft_green(array) -> array:
             for y in range(0, width):
                 r, g, b = nimage.getpixel((y, x))
                 barray[x].insert(y, [0, g, 0])
-            
+
         green_image = create_image(barray)
         green_image.save(output_image_path)
 
-    except:
+    except Exception:
         raise AssertionError("Error: failed to create image")
 
     return barray
@@ -157,10 +160,10 @@ def ft_grey(array) -> array:
                 r, g, b = nimage.getpixel((y, x))
                 barray[x].insert(y, [r, g, b])
 
-    except:
+    except Exception:
         raise AssertionError("Error: failed to create image")
-
     return barray
+
 
 def load_image(image) -> array:
     try:
@@ -181,14 +184,15 @@ def load_image(image) -> array:
             i += 1
         print(string, (height, width, i))
         print(barray)
-    except:
+    except Exception:
         raise AssertionError("An error occured")
     return barray
+
 
 def ft_load(path: str) -> array:
     try:
         Image.open(path)
         image = Image.open(path)
-    except:
+    except Exception:
         raise AssertionError("Error: failed to open file")
     return load_image(image)
