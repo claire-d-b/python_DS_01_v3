@@ -68,10 +68,7 @@ def rotate(three_d_lst: list) -> list:
     # Rotate the 3D list 90° to the left
     # When -1 is used as the step, it means to iterate in reverse order.
     # stopping before -1. The -1 step indicates to count backwards.
-    # rotated_list = []
-    # for i in range(len(three_d_lst[0]) - 1, -1, -1):
-    #     for j in range(len(three_d_lst)):
-    #         rotated_list.append(three_d_lst[j][i])
+
     rotated_list = []
     for i in range(len(three_d_lst[0]) - 1, -1, -1):
         rotated_list.insert(len(three_d_lst[0]) - 1 - i, [])
@@ -82,31 +79,6 @@ def rotate(three_d_lst: list) -> list:
 
     # Display the rotated 3D list
     return rotated_list
-
-def ft_load(path: str) -> bytearray:
-    try:
-        Image.open(path)
-        image = Image.open(path)
-        barray = []
-
-        width, height = image.size
-
-        for x in range(0, height):
-            barray.insert(x, [])
-            for y in range(0, width):
-                r, g, b = image.getpixel((y, x))
-                barray[x].insert(y, [r, g, b])
-
-        string = "The shape of image is: "
-        items = image.getpixel((0, 0))
-        i = 0
-        for item in items:
-            i += 1
-        print(string, (height, width, i))
-
-    except:
-        raise AssertionError("Error: failed to open file")
-    return barray
 
 def ft_load(path: str) -> bytearray:
     try:

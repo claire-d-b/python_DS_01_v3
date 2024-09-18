@@ -96,6 +96,7 @@ def ft_load(path: str) -> bytearray:
         for item in items:
             i += 1
         print(string, (height, width, i))
+    
         sliced_array = slice_me_3d(barray, height-650, height-250, width-600, width-200)
         color_image = create_image(sliced_array)
         gray_array, nlst, image = gray_convert(color_image)
