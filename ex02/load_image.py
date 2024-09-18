@@ -1,7 +1,7 @@
 from PIL import Image
+import array
 
-
-def load_image(image) -> bytearray:
+def load_image(image) -> array:
     try:
         barray = [[]]
 
@@ -22,7 +22,7 @@ def load_image(image) -> bytearray:
         raise AssertionError(e)
     return barray
 
-def ft_load(path: str) -> bytearray:
+def ft_load(path: str) -> array:
     try:
         Image.open(path)
         image = Image.open(path)

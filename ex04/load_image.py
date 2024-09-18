@@ -1,6 +1,7 @@
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
+import array
 
 # Grayscale ('L' Mode):
 # Channels: 1 (Intensity)
@@ -75,12 +76,11 @@ def rotate(three_d_lst: list) -> list:
         for j in range(0, len(three_d_lst)):
             rotated_list[len(three_d_lst[0]) -1 - i].insert(j, three_d_lst[j][i])
 
-    # rotated_list = [[three_d_lst[j][i] for j in range(len(three_d_lst))] for i in range(len(three_d_lst[0]) - 1, -1, -1)]
+    # <=> list comprehension: rotated_list = [[three_d_lst[j][i] for j in range(len(three_d_lst))] for i in range(len(three_d_lst[0]) - 1, -1, -1)]
 
-    # Display the rotated 3D list
     return rotated_list
 
-def ft_load(path: str) -> bytearray:
+def ft_load(path: str) -> array:
     try:
         Image.open(path)
         image = Image.open(path)

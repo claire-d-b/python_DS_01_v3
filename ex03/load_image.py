@@ -1,6 +1,7 @@
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
+import array
 
 # Grayscale ('L' Mode):
 # Channels: 1 (Intensity)
@@ -76,7 +77,7 @@ def rotate(three_d_lst: list) -> list:
     print(rotated_list)
     return rotated_list
 
-def ft_load(path: str) -> bytearray:
+def ft_load(path: str) -> array:
     try:
         Image.open(path)
         image = Image.open(path)
