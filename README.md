@@ -19,3 +19,6 @@ deactivate
 
 rm -rf **pycache**
 rm -rf venv
+
+AssertionError: Error: 'int' object is not iterable (parameter in apply_limit() is not a list)
+AssertionError: Error: list index out of range (give_bmi(): length of the lists differ)

@@ -95,12 +95,12 @@ def rotate(three_d_lst: list) -> list:
     # in range(len(three_d_lst))]
     # for i in range(len(three_d_lst[0]) - 1, -1, -1)]
 
-    rotated_array = np.array(rotated_list)
-    return rotated_array.reshape(len(rotated_array), -1)
+    return rotated_list
 
 
 def load_image(image) -> array:
     """Create array from  pillow image"""
+    np_rotated_array = []
     try:
         barray = []
 
@@ -115,25 +115,33 @@ def load_image(image) -> array:
         sliced_array = slice_me_3d(barray, height-650, height-250,
                                    width-600, width-200)
 
-        color_image = create_image(sliced_array)
-        gray_array, nlst, image = gray_convert(color_image)
+        sliced_image = create_image(sliced_array)
+        gray_array, nlst, image = gray_convert(sliced_image)
+        # Here we have the zoomed area in b&w NOT rotated
 
         print(f"The shape of image is: {tuple((gray_array.shape[0],
                                                gray_array.shape[1],
                                                3 - gray_array.ndim))} \
 or {gray_array.shape}")
         print(np.array(nlst))
-        rotated_array = rotate(nlst)
+        rotated_list = rotate(nlst)
 
-        nrotated_array = np.array(rotated_array)
-        print(f"New shape after Transpose: {(nrotated_array.shape[0],
-                                             nrotated_array.shape[1])}")
-        gray_array, nlst, image = gray_convert(color_image)
-        print_fig(image, 'output.jpeg')
+        np_rotated_array = np.array(rotated_list).reshape(len(rotated_list), -1)
+        # .reshape(len(rotated_list), -1) reshapes the newly created NumPy array into a 2D array.
+        # len(rotated_list): This sets the number of rows in the reshaped array to the length
+        # of rotated_list. Essentially, it will have one row for each element in the outer list.
+        # -1: This is a placeholder that tells NumPy to automatically determine the number of columns
+        # based on the total number of elements and the specified number of rows.
+        # Since the total number of elements in the original array is fixed, specifying the number
+        # of rows (len(rotated_list)) allows NumPy to compute the appropriate number of columns.
+        print(f"New shape after Transpose: {(np_rotated_array.shape[0],
+                                             np_rotated_array.shape[1])}")
+        img = Image.fromarray(np_rotated_array)
+        print_fig(img, 'output.jpeg')
 
     except Exception as e:
         raise AssertionError(f"An error occured: {e}")
-    return gray_array
+    return np_rotated_array
 
 
 def ft_load(path: str) -> array:

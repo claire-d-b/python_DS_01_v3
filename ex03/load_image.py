@@ -10,10 +10,11 @@ import array
 # There is no alpha channel in this mode.
 # To create a grayscale image from a 3D list using Pillow,
 # you need to ensure that the 3D list represents an image
-# where the third dimension contains only one value (the grayscale intensity).
-# The 3D list should be structured as [height][width][1], where each sub-list
-# represents a row of pixels, and each pixel has a single grayscale intensity
-# value.
+# where the third dimension contains only one value
+# (the grayscale intensity).
+# The 3D list should be structured as [height][width][1],
+# where each sub-list represents a row of pixels, and each pixel
+# has a single grayscale intensity value.
 
 
 def slice_me_3d(family: list, start_x: int, end_x: int, start_y: int,
@@ -55,15 +56,15 @@ black&white image"""
 
     gray_array = np.array(image)
 
-    lst = gray_array.tolist()
-    nlst = []
-    for x, item in enumerate(lst):
-        nlst.insert(x, [])
-        for y, unit in enumerate(item):
-            nlst[x].insert(y, [unit])
+    nlst = gray_array.tolist()
+    # nlst = []
+    # for x, item in enumerate(lst):
+    #     nlst.insert(x, [])
+    #     for y, unit in enumerate(item):
+    #         nlst[x].insert(y, [unit])
 
     return tuple((gray_array, nlst, image))
-
+    # Returns np.array, corresponding list and image
 
 def print_fig(image: Image, name: str) -> None:
     """Save figure"""
@@ -82,8 +83,8 @@ def print_fig(image: Image, name: str) -> None:
 
 def load_image(image) -> array:
     """Create array from  pillow image"""
+    barray = []
     try:
-        barray = []
         width, height = image.size
 
         for x in range(0, height):
@@ -108,8 +109,8 @@ def load_image(image) -> array:
               gray_array.shape[1], 3 - gray_array.ndim))} or \
 {gray_array.shape}")
         print_fig(image, 'output.jpeg')
-    except Exception:
-        raise AssertionError("An error occured")
+    except Exception as e:
+        raise AssertionError(f"Error: {e}")
     return np.array(nlst)
 
 

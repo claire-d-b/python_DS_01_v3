@@ -5,8 +5,8 @@ import array
 
 def load_image(image) -> array:
     """Create array from  pillow image"""
+    barray = []
     try:
-        barray = []
         width, height = image.size
 
         for x in range(0, height):
@@ -21,8 +21,8 @@ def load_image(image) -> array:
         for item in items:
             i += 1
         print(string, (height, width, i))
-    except Exception:
-        raise AssertionError("An error occured")
+    except Exception as e:
+        raise AssertionError(f"Error: {e}")
     return np.array(barray)
 
 

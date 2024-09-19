@@ -4,12 +4,14 @@ def give_bmi(height: list[int | float], weight:
     i = 0
     ret = []
     try:
+        isinstance(height, list) and is_list_of_numbers(height) \
+and isinstance(weight, list) and is_list_of_numbers(weight)
         len(height) == len(weight)
         for w in weight:
             ret.append(w / (height[i] ** 2))
             i += 1
-    except Exception:
-        raise AssertionError("Error: length of the lists differ")
+    except Exception as e:
+        raise AssertionError(f"Error: {e}")
     return ret
 
 
@@ -39,6 +41,6 @@ def apply_limit(bmi: list[int | float], limit: int) -> list[bool]:
                 ret.append(True)
             else:
                 ret.append(False)
-    except Exception:
-        raise AssertionError("Error: parameter of unexpected type")
+    except Exception as e:
+        raise AssertionError(f"Error: {e}")
     return ret
