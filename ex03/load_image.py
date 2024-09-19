@@ -98,7 +98,7 @@ def load_image(image) -> array:
         for item in items:
             i += 1
         print(string, (height, width, i))
-        print(barray)
+        print(np.array(barray))
 
         sliced_array = slice_me_3d(barray, height-650, height-250,
                                    width-600, width-200)
@@ -107,15 +107,14 @@ def load_image(image) -> array:
         print(f"New shape after slicing: {tuple((gray_array.shape[0],
               gray_array.shape[1], 3 - gray_array.ndim))} or \
 {gray_array.shape}")
-        print(nlst)
         print_fig(image, 'output.jpeg')
     except Exception:
         raise AssertionError("An error occured")
-    return barray
+    return np.array(nlst)
 
 
 def ft_load(path: str) -> array:
-    """Return an array from image""""
+    """Return an array from image"""
     try:
         Image.open(path)
         image = Image.open(path)

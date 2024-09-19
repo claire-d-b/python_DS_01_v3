@@ -95,7 +95,8 @@ def rotate(three_d_lst: list) -> list:
     # in range(len(three_d_lst))]
     # for i in range(len(three_d_lst[0]) - 1, -1, -1)]
 
-    return rotated_list
+    rotated_array = np.array(rotated_list)
+    return rotated_array.reshape(len(rotated_array),-1)
 
 
 def load_image(image) -> array:
@@ -121,25 +122,22 @@ def load_image(image) -> array:
                                                gray_array.shape[1],
                                                3 - gray_array.ndim))} \
 or {gray_array.shape}")
-        print(nlst)
+        print(np.array(nlst))
         rotated_array = rotate(nlst)
 
         nrotated_array = np.array(rotated_array)
         print(f"New shape after Transpose: {(nrotated_array.shape[0],
                                              nrotated_array.shape[1])}")
-        print(rotated_array)
-
-        color_image = create_image(rotated_array)
         gray_array, nlst, image = gray_convert(color_image)
         print_fig(image, 'output.jpeg')
-        return nrotated_array
 
     except Exception as e:
         raise AssertionError(f"An error occured: {e}")
+    return gray_array
 
 
 def ft_load(path: str) -> array:
-    """Return an array from image""""
+    """Return an array from image"""
     try:
         Image.open(path)
         image = Image.open(path)

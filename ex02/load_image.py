@@ -1,4 +1,5 @@
 from PIL import Image
+import numpy as np
 import array
 
 
@@ -20,14 +21,13 @@ def load_image(image) -> array:
         for item in items:
             i += 1
         print(string, (height, width, i))
-        print(barray)
     except Exception:
         raise AssertionError("An error occured")
-    return barray
+    return np.array(barray)
 
 
 def ft_load(path: str) -> array:
-    """Return an array from image""""
+    """Return an array from image"""
     try:
         Image.open(path)
         image = Image.open(path)
