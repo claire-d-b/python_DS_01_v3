@@ -96,7 +96,7 @@ def rotate(three_d_lst: list) -> list:
     # for i in range(len(three_d_lst[0]) - 1, -1, -1)]
 
     rotated_array = np.array(rotated_list)
-    return rotated_array.reshape(len(rotated_array),-1)
+    return rotated_array.reshape(len(rotated_array), -1)
 
 
 def load_image(image) -> array:
