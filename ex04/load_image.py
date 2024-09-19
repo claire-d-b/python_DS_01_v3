@@ -126,14 +126,19 @@ or {gray_array.shape}")
         print(np.array(nlst))
         rotated_list = rotate(nlst)
 
-        np_rotated_array = np.array(rotated_list).reshape(len(rotated_list), -1)
-        # .reshape(len(rotated_list), -1) reshapes the newly created NumPy array into a 2D array.
-        # len(rotated_list): This sets the number of rows in the reshaped array to the length
-        # of rotated_list. Essentially, it will have one row for each element in the outer list.
-        # -1: This is a placeholder that tells NumPy to automatically determine the number of columns
-        # based on the total number of elements and the specified number of rows.
-        # Since the total number of elements in the original array is fixed, specifying the number
-        # of rows (len(rotated_list)) allows NumPy to compute the appropriate number of columns.
+        np_rotated_array = np.array(rotated_list).reshape(len(rotated_list),
+                                                          - 1)
+        # .reshape(len(rotated_list), -1) reshapes the newly created NumPy
+        # array into a 2D array.
+        # len(rotated_list): This sets the number of rows in the reshaped
+        # array to the length of rotated_list.
+        # Essentially, it will have one row for each element in the outer list.
+        # -1: This is a placeholder that tells NumPy to automatically determine
+        # the number of columns based on the total number of elements
+        # and the specified number of rows.
+        # Since the total number of elements in the original array is fixed,
+        # specifying the number of rows (len(rotated_list))
+        # allows NumPy to compute the appropriate number of columns.
         print(f"New shape after Transpose: {(np_rotated_array.shape[0],
                                              np_rotated_array.shape[1])}")
         img = Image.fromarray(np_rotated_array)

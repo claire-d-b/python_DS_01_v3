@@ -50,8 +50,8 @@ def create_image(barray: list) -> Image:
 
 
 def gray_convert(color_image: Image) -> tuple:
-    """Convert the image to grayscale and create array from \
-black&white image"""
+    """Convert the image to grayscale and create array from
+    black&white image"""
     image = color_image.convert('L')
 
     gray_array = np.array(image)
@@ -65,6 +65,7 @@ black&white image"""
 
     return tuple((gray_array, nlst, image))
     # Returns np.array, corresponding list and image
+
 
 def print_fig(image: Image, name: str) -> None:
     """Save figure"""

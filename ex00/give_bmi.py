@@ -5,7 +5,7 @@ def give_bmi(height: list[int | float], weight:
     ret = []
     try:
         isinstance(height, list) and is_list_of_numbers(height) \
-and isinstance(weight, list) and is_list_of_numbers(weight)
+            and isinstance(weight, list) and is_list_of_numbers(weight)
         len(height) == len(weight)
         for w in weight:
             ret.append(w / (height[i] ** 2))
@@ -17,7 +17,7 @@ and isinstance(weight, list) and is_list_of_numbers(weight)
 
 def is_list_of_numbers(lst: list[int | float]) -> bool:
     """Return True if all elements of the iterable are true
-(or if the iterable is empty)"""
+    (or if the iterable is empty)"""
     # all(iterable)
     # Equivalent to:
 
