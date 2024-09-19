@@ -166,6 +166,7 @@ def ft_grey(array) -> array:
 
 
 def load_image(image) -> array:
+    """Create array from  pillow image"""
     try:
         barray = []
 
@@ -190,6 +191,7 @@ def load_image(image) -> array:
 
 
 def ft_load(path: str) -> array:
+    """Return an array from image""""
     try:
         Image.open(path)
         image = Image.open(path)

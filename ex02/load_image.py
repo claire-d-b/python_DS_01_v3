@@ -27,6 +27,7 @@ def load_image(image) -> array:
 
 
 def ft_load(path: str) -> array:
+    """Return an array from image""""
     try:
         Image.open(path)
         image = Image.open(path)

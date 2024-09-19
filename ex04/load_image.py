@@ -99,6 +99,7 @@ def rotate(three_d_lst: list) -> list:
 
 
 def load_image(image) -> array:
+    """Create array from  pillow image"""
     try:
         barray = []
 
@@ -138,6 +139,7 @@ or {gray_array.shape}")
 
 
 def ft_load(path: str) -> array:
+    """Return an array from image""""
     try:
         Image.open(path)
         image = Image.open(path)
