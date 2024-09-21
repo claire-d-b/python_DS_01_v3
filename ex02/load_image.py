@@ -1,6 +1,6 @@
 from PIL import Image
 import numpy as np
-import array
+from array import array
 
 
 def load_image(image) -> array:

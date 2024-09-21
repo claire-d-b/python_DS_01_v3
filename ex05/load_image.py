@@ -1,6 +1,6 @@
 from PIL import Image, ImageOps
 import numpy as np
-import array
+from array import array
 
 
 def create_image(barray: list) -> Image:
@@ -152,17 +152,9 @@ def ft_grey(array) -> array:
         gray_array, nlst, gray_image = gray_convert(nimage)
         gray_image.save(output_image_path)
 
-        width, height = nimage.size
-
-        for x in range(0, height):
-            barray.insert(x, [])
-            for y in range(0, width):
-                r, g, b = nimage.getpixel((y, x))
-                barray[x].insert(y, [r, g, b])
-
     except Exception:
         raise AssertionError("Error: failed to create image")
-    return barray
+    return nlst
 
 
 def load_image(image) -> array:
