@@ -141,7 +141,10 @@ or {gray_array.shape}")
         # allows NumPy to compute the appropriate number of columns.
         print(f"New shape after Transpose: {(np_rotated_array.shape[0],
                                              np_rotated_array.shape[1])}")
-        img = Image.fromarray(np_rotated_array)
+        # Convert the array to a compatible data type such as uint8
+        # (8-bit unsigned integers, often used for image data).
+        # You can do this using astype() from NumPy:
+        img = Image.fromarray(np_rotated_array.astype('uint8'))
         print_fig(img, 'output.jpeg')
 
     except Exception as e:

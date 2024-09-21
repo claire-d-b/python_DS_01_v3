@@ -146,7 +146,7 @@ def ft_grey(array) -> array:
         for black to (255, 255, 255) for white, with intermediate values
         representing different shades of gray. """
     output_image_path = "Grey.jpeg"
-    barray = []
+
     try:
         nimage = create_image(array)
         gray_array, nlst, gray_image = gray_convert(nimage)
