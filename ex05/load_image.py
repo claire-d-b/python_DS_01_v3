@@ -1,4 +1,4 @@
-from PIL import Image, ImageOps
+from PIL import Image
 import numpy as np
 from array import array
 
@@ -22,43 +22,26 @@ def create_image(barray: list) -> Image:
     return image
 
 
-def gray_convert(color_image: Image) -> tuple:
-    """Convert the image to grayscale and create array from
-    black&white image"""
-    image = color_image.convert('L')
-
-    gray_array = np.array(image)
-
-    lst = gray_array.tolist()
-    nlst = []
-    for x, item in enumerate(lst):
-        nlst.insert(x, [])
-        for y, unit in enumerate(item):
-            nlst[x].insert(y, [unit])
-
-    return tuple((gray_array, nlst, image))
-
-
 def ft_invert(array) -> array:
     """Inverts the color of the image received."""
     output_image_path = "Invert.jpeg"
     barray = []
     try:
-        image = create_image(array)
+        nimage = create_image(array)
 
-        # Invert the image
-        inverted_image = ImageOps.invert(image)
-
-        # Save the inverted image
-        inverted_image.save(output_image_path)
-
-        width, height = inverted_image.size
+        width, height = nimage.size
 
         for x in range(0, height):
             barray.insert(x, [])
             for y in range(0, width):
-                r, g, b = inverted_image.getpixel((y, x))
-                barray[x].insert(y, [r, g, b])
+                r, g, b = nimage.getpixel((y, x))
+                barray[x].insert(y, [(r - 255) * -1,
+                                     (g - 255) * -1,
+                                     (b - 255) * -1])
+
+        invert_image = create_image(barray)
+        invert_image.save(output_image_path)
+
     except Exception:
         raise AssertionError("Error: failed to create image")
 
@@ -71,6 +54,7 @@ def ft_red(array) -> array:
     barray = []
     try:
         nimage = create_image(array)
+        nimage.save(output_image_path)
 
         width, height = nimage.size
 
@@ -78,13 +62,13 @@ def ft_red(array) -> array:
             barray.insert(x, [])
             for y in range(0, width):
                 r, g, b = nimage.getpixel((y, x))
-                barray[x].insert(y, [r, 0, 0])
+                barray[x].insert(y, [r * 1, g * 0, b * 0])
 
         red_image = create_image(barray)
         red_image.save(output_image_path)
 
-    except Exception:
-        raise AssertionError("Error: failed to create image")
+    except Exception as e:
+        raise AssertionError(f"Error: {e}")
 
     return barray
 
@@ -128,7 +112,7 @@ def ft_green(array) -> array:
             barray.insert(x, [])
             for y in range(0, width):
                 r, g, b = nimage.getpixel((y, x))
-                barray[x].insert(y, [0, g, 0])
+                barray[x].insert(y, [-r, g, -b])
 
         green_image = create_image(barray)
         green_image.save(output_image_path)
@@ -140,21 +124,33 @@ def ft_green(array) -> array:
 
 
 def ft_grey(array) -> array:
-    """ Grayscale colors are those where the red, green, and blue
-        components are all equal.
-        The RGB values that make up shades of gray range from (0, 0, 0)
-        for black to (255, 255, 255) for white, with intermediate values
-        representing different shades of gray. """
-    output_image_path = "Grey.jpeg"
+    """Convert the image to grayscale and create array from
+    black&white image"""
+    # Grayscale colors are those where the red, green, and blue
+    # components are all equal.
+    # The RGB values that make up shades of gray range from (0, 0, 0)
+    # for black to (255, 255, 255) for white, with intermediate values
+    # representing different shades of gray. """
 
+    output_image_path = "Grey.jpeg"
+    color_image = create_image(array)
+    barray = []
     try:
-        nimage = create_image(array)
-        gray_array, nlst, gray_image = gray_convert(nimage)
+        width, height = color_image.size
+
+        for x in range(0, height):
+            barray.insert(x, [])
+            for y in range(0, width):
+                r, g, b = color_image.getpixel((y, x))
+                component_value = int(r / 3 + g / 3 + b / 3)
+                barray[x].insert(y, [component_value,
+                                     component_value, component_value])
+
+        gray_image = create_image(barray)
         gray_image.save(output_image_path)
 
-    except Exception:
-        raise AssertionError("Error: failed to create image")
-    return nlst
+    except Exception as e:
+        raise AssertionError(f"Error: {e}")
 
 
 def load_image(image) -> array:

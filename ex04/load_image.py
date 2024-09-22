@@ -84,18 +84,15 @@ def rotate(three_d_lst: list) -> list:
     # When -1 is used as the step, it means to iterate in reverse order.
     # stopping before -1. The -1 step indicates to count backwards.
 
-    rotated_list = []
-    for i in range(len(three_d_lst[0]) - 1, -1, -1):
-        rotated_list.insert(len(three_d_lst[0]) - 1 - i, [])
-        for j in range(0, len(three_d_lst)):
-            rotated_list[len(three_d_lst[0]) - 1 - i].insert(j,
-                                                             three_d_lst[j][i])
+    transposed_list = []
+    # iterate through rows
+    for i, element in enumerate(three_d_lst):
+        transposed_list.insert(i, [])
+    # iterate through columns
+        for j, unit in enumerate(element):
+            transposed_list[i].insert(j, [unit])
 
-    # <=> list comprehension: rotated_list = [[three_d_lst[j][i] for j
-    # in range(len(three_d_lst))]
-    # for i in range(len(three_d_lst[0]) - 1, -1, -1)]
-
-    return rotated_list
+    return transposed_list
 
 
 def load_image(image) -> array:
