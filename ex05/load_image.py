@@ -112,7 +112,7 @@ def ft_green(array) -> array:
             barray.insert(x, [])
             for y in range(0, width):
                 r, g, b = nimage.getpixel((y, x))
-                barray[x].insert(y, [-r, g, -b])
+                barray[x].insert(y, [r-r, g, b-b])
 
         green_image = create_image(barray)
         green_image.save(output_image_path)
