@@ -56,12 +56,12 @@ def gray_convert(color_image: Image) -> tuple:
 
     gray_array = np.array(image)
 
-    nlst = gray_array.tolist()
-    # nlst = []
-    # for x, item in enumerate(lst):
-    #     nlst.insert(x, [])
-    #     for y, unit in enumerate(item):
-    #         nlst[x].insert(y, [unit])
+    lst = gray_array.tolist()
+    nlst = []
+    for x, item in enumerate(lst):
+        nlst.insert(x, [])
+        for y, unit in enumerate(item):
+            nlst[x].insert(y, [unit])
 
     return tuple((gray_array, nlst, image))
     # Returns np.array, corresponding list and image
