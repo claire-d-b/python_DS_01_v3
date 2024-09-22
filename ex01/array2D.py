@@ -9,7 +9,7 @@ def slice_me(family: list, start: int, end: int) -> list:
         for f in family:
             if rows != len(f):
                 raise AssertionError("Length of sublists in \
-                    main list differ")
+main list differ")
 
         shape = (len(family), len(family[0]))
         nshape = (len(ret), len(ret[0]))

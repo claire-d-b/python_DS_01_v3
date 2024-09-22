@@ -119,9 +119,9 @@ def load_image(image) -> array:
         gray_array, nlst, image = gray_convert(sliced_image)
         # Here we have the zoomed area in b&w NOT rotated
 
-        print(f"The shape of image is: {tuple((gray_array.shape[0],
-                                               gray_array.shape[1],
-                                               3 - gray_array.ndim))} \
+        my_tuple = tuple((gray_array.shape[0], gray_array.shape[1],
+                          3 - gray_array.ndim))
+        print(f"The shape of image is: {my_tuple} \
 or {gray_array.shape}")
         print(np.array(nlst))
         rotated_list = rotate(nlst)
@@ -139,8 +139,9 @@ or {gray_array.shape}")
         # Since the total number of elements in the original array is fixed,
         # specifying the number of rows (len(rotated_list))
         # allows NumPy to compute the appropriate number of columns.
-        print(f"New shape after Transpose: {(np_rotated_array.shape[0],
-                                             np_rotated_array.shape[1])}")
+        my_transpose_tuple = tuple((np_rotated_array.shape[0],
+                                    np_rotated_array.shape[1]))
+        print(f"New shape after Transpose: {my_transpose_tuple}")
         # Convert the array to a compatible data type such as uint8
         # (8-bit unsigned integers, often used for image data).
         # You can do this using astype() from NumPy:

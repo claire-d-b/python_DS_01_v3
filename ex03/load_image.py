@@ -106,8 +106,9 @@ def load_image(image) -> array:
                                    width-600, width-200)
         color_image = create_image(sliced_array)
         gray_array, nlst, image = gray_convert(color_image)
-        print(f"New shape after slicing: {tuple((gray_array.shape[0],
-              gray_array.shape[1], 3 - gray_array.ndim))} or \
+        my_tuple = tuple((gray_array.shape[0],
+                         gray_array.shape[1], 3 - gray_array.ndim))
+        print(f"New shape after slicing: {my_tuple} or \
 {gray_array.shape}")
         print_fig(image, 'output.jpeg')
     except Exception as e:
